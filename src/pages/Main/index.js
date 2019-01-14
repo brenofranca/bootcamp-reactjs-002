@@ -17,6 +17,13 @@ export default class Main extends Component {
     repositoryError: false,
   };
 
+  componentDidMount() {
+    const repositories = JSON.parse(localStorage.getItem('@appReactJs'));
+    if (repositories) {
+      this.setState({ repositories });
+    }
+  }
+
   handleRepositoryAdd = async (e) => {
     e.preventDefault();
 
@@ -29,11 +36,22 @@ export default class Main extends Component {
 
       repository.lastCommit = moment(repository.pushed_at).fromNow();
 
+      const repositoryIsAdded = repositories.find(item => item.id === repository.id);
+
+      if (repositoryIsAdded) {
+        this.setState({ repositoryError: true });
+        return;
+      }
+
+      const newRepositories = [...repositories, repository];
+
       this.setState({
         repositoryInput: '',
         repositoryError: false,
-        repositories: [...repositories, repository],
+        repositories: newRepositories,
       });
+
+      localStorage.setItem('@appReactJs', JSON.stringify(newRepositories));
     } catch (err) {
       this.setState({ repositoryError: true });
     } finally {
