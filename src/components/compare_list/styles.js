@@ -52,7 +52,6 @@ export const Repository = styled.div`
       }
 
       button {
-        background: #c15555;
         border: 0;
         border-radius: 3px;
         color: #fff;
@@ -61,8 +60,21 @@ export const Repository = styled.div`
         font-weight: bold;
         width: 100%;
 
-        &:hover {
-          background: #ad0404;
+        &.remove {
+          background: #c15555;
+
+          &:hover {
+            background: #ad0404;
+          }
+        }
+
+        &.update {
+          background: #5db55d;
+          margin-top: 5px;
+
+          &:hover {
+            background: #449044;
+          }
         }
       }
 

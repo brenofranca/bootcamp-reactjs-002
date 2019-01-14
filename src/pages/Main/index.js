@@ -71,6 +71,24 @@ export default class Main extends Component {
     localStorage.setItem('@appReactJs', JSON.stringify(repositoriesFiltered));
   };
 
+  handleRepositoryUpdate = async (repository) => {
+    try {
+      const { repositories } = this.state;
+      const { data } = await api.get(`/repos/${repository.full_name}`);
+
+      data.lastCommit = moment(data.pushed_at).fromNow();
+
+      const repositoriesUpdateds = repositories.map(item => (item.id === repository.id ? { ...item, ...data } : { ...item }));
+
+      this.setState({
+        repositories: [...repositoriesUpdateds],
+      });
+
+      localStorage.setItem('@appReactJs', JSON.stringify(repositoriesUpdateds));
+    } catch (err) {
+    }
+  };
+
   render() {
     const {
       loading, repositoryError, repositoryInput, repositories,
@@ -92,7 +110,8 @@ export default class Main extends Component {
 
         <CompareList
           repositories={repositories}
-          onHandleClick={repository => this.handleRepositoryRemove(repository)}
+          onHandleClickRemove={repository => this.handleRepositoryRemove(repository)}
+          onHandleClickUpdate={repository => this.handleRepositoryUpdate(repository)}
         />
       </Container>
     );
