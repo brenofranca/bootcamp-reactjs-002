@@ -59,6 +59,18 @@ export default class Main extends Component {
     }
   };
 
+  handleRepositoryRemove = async ({ id }) => {
+    const { repositories } = this.state;
+
+    const repositoriesFiltered = repositories.filter(item => item.id !== id);
+
+    this.setState({
+      repositories: [...repositoriesFiltered],
+    });
+
+    localStorage.setItem('@appReactJs', JSON.stringify(repositoriesFiltered));
+  };
+
   render() {
     const {
       loading, repositoryError, repositoryInput, repositories,
@@ -78,7 +90,10 @@ export default class Main extends Component {
           <button type="submit">{loading ? <i className="fa fa-spinner fa-pulse" /> : 'OK'}</button>
         </Form>
 
-        <CompareList repositories={repositories} />
+        <CompareList
+          repositories={repositories}
+          onHandleClick={repository => this.handleRepositoryRemove(repository)}
+        />
       </Container>
     );
   }

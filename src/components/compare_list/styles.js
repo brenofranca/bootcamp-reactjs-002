@@ -51,8 +51,27 @@ export const Repository = styled.div`
         margin-left: 5px;
       }
 
+      button {
+        background: #c15555;
+        border: 0;
+        border-radius: 3px;
+        color: #fff;
+        height: 40px;
+        font-size: 14px;
+        font-weight: bold;
+        width: 100%;
+
+        &:hover {
+          background: #ad0404;
+        }
+      }
+
       &:nth-child(2n-1) {
         background: #f5f5f5;
+      }
+
+      &:last-child {
+        padding: 10px;
       }
     }
   }

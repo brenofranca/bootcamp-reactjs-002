@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Container, Repository } from './styles';
 
-const CompareList = ({ repositories }) => (
+const CompareList = ({ repositories, onHandleClick }) => (
   <Container>
     {repositories.map(repository => (
       <Repository key={repository.id}>
@@ -28,6 +28,11 @@ const CompareList = ({ repositories }) => (
           <li>
             {repository.lastCommit}
             <small>last commit</small>
+          </li>
+          <li>
+            <button type="button" onClick={() => onHandleClick(repository)}>
+              Remover
+            </button>
           </li>
         </ul>
       </Repository>
